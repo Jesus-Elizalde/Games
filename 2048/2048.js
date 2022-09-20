@@ -50,6 +50,8 @@ const updateTile = (tile, num) => {
 document.addEventListener("keyup", (e) => {
   if (e.code == "ArrowLeft") slideLeft();
   else if (e.code == "ArrowRight") slideRight();
+  else if (e.code == "ArrowUp") slideUp();
+  else if (e.code == "ArrowDown") slideDown();
 });
 
 const filterZero = (row) => {
@@ -97,6 +99,35 @@ const slideRight = () => {
     board[r] = row;
 
     for (let c = 0; c < columns; c++) {
+      let tile = document.getElementById(r.toString() + "-" + c.toString());
+      let num = board[r][c];
+      updateTile(tile, num);
+    }
+  }
+};
+
+const slideUp = () => {
+  for (let c = 0; c < columns; c++) {
+    let row = [board[0][c], board[1][c], board[2][c], board[3][c]];
+    row = slide(row);
+
+    for (let r = 0; r < rows; r++) {
+      board[r][c] = row[r];
+      let tile = document.getElementById(r.toString() + "-" + c.toString());
+      let num = board[r][c];
+      updateTile(tile, num);
+    }
+  }
+};
+const slideDown = () => {
+  for (let c = 0; c < columns; c++) {
+    let row = [board[0][c], board[1][c], board[2][c], board[3][c]];
+    row.reverse();
+    row = slide(row);
+    row.reverse();
+
+    for (let r = 0; r < rows; r++) {
+      board[r][c] = row[r];
       let tile = document.getElementById(r.toString() + "-" + c.toString());
       let num = board[r][c];
       updateTile(tile, num);
