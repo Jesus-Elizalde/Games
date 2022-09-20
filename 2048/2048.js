@@ -48,9 +48,8 @@ const updateTile = (tile, num) => {
 };
 
 document.addEventListener("keyup", (e) => {
-  if (e.code == "ArrowLeft") {
-    slideLeft();
-  }
+  if (e.code == "ArrowLeft") slideLeft();
+  else if (e.code == "ArrowRight") slideRight();
 });
 
 const filterZero = (row) => {
@@ -79,6 +78,22 @@ const slideLeft = () => {
   for (let r = 0; r < rows; r++) {
     let row = board[r];
     row = slide(row);
+    board[r] = row;
+
+    for (let c = 0; c < columns; c++) {
+      let tile = document.getElementById(r.toString() + "-" + c.toString());
+      let num = board[r][c];
+      updateTile(tile, num);
+    }
+  }
+};
+
+const slideRight = () => {
+  for (let r = 0; r < rows; r++) {
+    let row = board[r];
+    row.reverse();
+    row = slide(row);
+    row.reverse();
     board[r] = row;
 
     for (let c = 0; c < columns; c++) {
